@@ -9,5 +9,7 @@ to do list
 - make md file of what you understand
 - ask questions to the client to understand the project better
 - make a mockup of the software
-- make a plan for the software
+- competitor analysis
+- go to client and ask him k this is what i understand
+- mockup
 - make the software

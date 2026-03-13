@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ConstructERP — Mockup Index</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;padding:48px 40px}
+  h1{font-size:32px;font-weight:700;color:#38bdf8;margin-bottom:6px}
+  .subtitle{color:#64748b;font-size:14px;margin-bottom:40px}
+  .section{margin-bottom:40px}
+  .section h2{font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:#475569;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #1e293b}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+  .page-card{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:22px;text-decoration:none;color:#e2e8f0;transition:.2s;display:block}
+  .page-card:hover{transform:translateY(-3px);border-color:#475569;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  .pc-icon{font-size:32px;margin-bottom:12px}
+  .pc-name{font-size:15px;font-weight:700;margin-bottom:4px}
+  .pc-desc{font-size:12px;color:#64748b;line-height:1.5}
+  .pc-role{margin-top:12px;font-size:10px;padding:3px 10px;border-radius:12px;display:inline-block;font-weight:600}
+  .role-owner{background:rgba(56,189,248,.15);color:#38bdf8}
+  .role-accountant{background:rgba(168,85,247,.15);color:#a855f7}
+  .role-site{background:rgba(34,197,94,.15);color:#22c55e}
+  .role-procurement{background:rgba(245,158,11,.15);color:#f59e0b}
+
+  /* Roles section */
+  .role-card{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:22px;margin-bottom:12px}
+  .rc-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  .rc-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px}
+  .rc-name{font-size:16px;font-weight:700}
+  .rc-tagline{font-size:12px;color:#64748b;margin-top:2px}
+  .rc-accesses{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .access-tag{font-size:11px;padding:3px 10px;border-radius:12px;background:#334155;color:#cbd5e1;font-weight:500}
+  .rc-cant{font-size:12px;color:#475569;border-top:1px solid #334155;padding-top:10px;margin-top:4px}
+
+  .warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:14px 18px;font-size:13px;color:#fbbf24;margin-top:40px;text-align:center}
+</style>
+</head>
+<body>
+  <h1>ConstructERP — Mockup Index</h1>
+  <p class="subtitle">Click any section to explore the mockup. These are for client validation only — not a working application.</p>
+
+  <!-- Pages -->
+  <div class="section">
+    <h2>📄 Mockup Pages</h2>
+    <div class="grid">
+      <a href="01-dashboard.html" class="page-card">
+        <div class="pc-icon">📊</div>
+        <div class="pc-name">Dashboard</div>
+        <div class="pc-desc">Financial overview — cash balance, payables, receivables, job statuses, equipment P&L, recent transactions</div>
+        <span class="pc-role role-owner">👑 Owner / Manager</span>
+      </a>
+      <a href="02-chart-of-accounts.html" class="page-card">
+        <div class="pc-icon">📒</div>
+        <div class="pc-name">Chart of Accounts</div>
+        <div class="pc-desc">Full account tree — Assets, Liabilities, Equity, Revenue, Expenses with balances and sub-accounts</div>
+        <span class="pc-role role-accountant">🔢 Accountant</span>
+      </a>
+      <a href="03-fixed-assets.html" class="page-card">
+        <div class="pc-icon">🏗️</div>
+        <div class="pc-name">Fixed Assets & Equipment</div>
+        <div class="pc-desc">Equipment register with depreciation, permit expiry alerts, job assignment, and P&L per machine</div>
+        <span class="pc-role role-site">🦺 Site Manager</span>
+      </a>
+      <a href="04-job-orders.html" class="page-card">
+        <div class="pc-icon">📋</div>
+        <div class="pc-name">Job Orders</div>
+        <div class="pc-desc">Project tracking with budget vs actual, cost breakdowns by labor/material/equipment, progress bars</div>
+        <span class="pc-role role-site">🦺 Site Manager</span>
+      </a>
+      <a href="05-vendors-ap.html" class="page-card">
+        <div class="pc-icon">🧾</div>
+        <div class="pc-name">Vendors & Accounts Payable</div>
+        <div class="pc-desc">Vendor list, invoice entry with job/equipment assignment, AP aging, overdue alerts, payment tracking</div>
+        <span class="pc-role role-procurement">📦 Procurement / Accountant</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- User Roles -->
+  <div class="section">
+    <h2>👥 Who Uses This System</h2>
+
+    <div class="role-card">
+      <div class="rc-top">
+        <div class="rc-icon" style="background:rgba(56,189,248,.12)">👑</div>
+        <div><div class="rc-name">Owner / Manager</div><div class="rc-tagline">Thinks in money — wants to see the big picture</div></div>
+      </div>
+      <div class="rc-accesses">
+        <span class="access-tag">📊 Dashboard</span>
+        <span class="access-tag">📈 All Reports</span>
+        <span class="access-tag">📋 Job Order P&L</span>
+        <span class="access-tag">🏗️ Equipment P&L</span>
+        <span class="access-tag">🏦 Cash & Bank</span>
+      </div>
+      <div class="rc-cant">✅ Can see everything. ❌ Usually doesn't do data entry — just reviews and approves.</div>
+    </div>
+
+    <div class="role-card">
+      <div class="rc-top">
+        <div class="rc-icon" style="background:rgba(168,85,247,.12)">🔢</div>
+        <div><div class="rc-name">Accountant / Finance Officer</div><div class="rc-tagline">The backbone — enters and reconciles everything</div></div>
+      </div>
+      <div class="rc-accesses">
+        <span class="access-tag">📒 Chart of Accounts</span>
+        <span class="access-tag">🧾 Vendor Invoices</span>
+        <span class="access-tag">💰 Customer Invoices</span>
+        <span class="access-tag">🏦 Cash & Bank</span>
+        <span class="access-tag">💳 Payments</span>
+        <span class="access-tag">📈 Financial Reports</span>
+        <span class="access-tag">⚖️ Bank Reconciliation</span>
+        <span class="access-tag">📅 Depreciation</span>
+      </div>
+      <div class="rc-cant">✅ Full access to all financial modules. ❌ Cannot delete posted transactions (audit trail protected).</div>
+    </div>
+
+    <div class="role-card">
+      <div class="rc-top">
+        <div class="rc-icon" style="background:rgba(34,197,94,.12)">🦺</div>
+        <div><div class="rc-name">Site Manager / Project Manager</div><div class="rc-tagline">Tracks what's happening on the ground</div></div>
+      </div>
+      <div class="rc-accesses">
+        <span class="access-tag">📋 Their Job Orders only</span>
+        <span class="access-tag">🏗️ Equipment on their site</span>
+        <span class="access-tag">🔧 Parts used on site</span>
+        <span class="access-tag">👷 Worker attendance / hours</span>
+      </div>
+      <div class="rc-cant">✅ Can view costs and progress for their own jobs. ❌ Cannot see other job orders, financial ledgers, or full reports.</div>
+    </div>
+
+    <div class="role-card">
+      <div class="rc-top">
+        <div class="rc-icon" style="background:rgba(245,158,11,.12)">📦</div>
+        <div><div class="rc-name">Procurement Officer</div><div class="rc-tagline">Manages purchasing — vendors, POs, and parts stock</div></div>
+      </div>
+      <div class="rc-accesses">
+        <span class="access-tag">🧾 Vendors</span>
+        <span class="access-tag">📦 Purchase Orders</span>
+        <span class="access-tag">🔩 Parts & Spares</span>
+        <span class="access-tag">📬 Goods Receipt</span>
+      </div>
+      <div class="rc-cant">✅ Can create POs and receive goods. ❌ Cannot post payments or access financial reports — hands off to accountant for payment.</div>
+    </div>
+
+    <div class="role-card">
+      <div class="rc-top">
+        <div class="rc-icon" style="background:rgba(239,68,68,.12)">👷</div>
+        <div><div class="rc-name">HR / Payroll Admin</div><div class="rc-tagline">Handles employee records and salary processing</div></div>
+      </div>
+      <div class="rc-accesses">
+        <span class="access-tag">👷 Employee Records</span>
+        <span class="access-tag">💵 Payroll Processing</span>
+        <span class="access-tag">⏱️ Time & Attendance</span>
+        <span class="access-tag">📋 Cost Allocation to Jobs</span>
+      </div>
+      <div class="rc-cant">✅ Can run payroll and assign labor costs to job orders / equipment. ❌ Cannot access vendor/customer financials or GL.</div>
+    </div>
+
+  </div>
+
+  <div class="warn">⚠️ MOCKUP — For client validation only. Not a working application.</div>
+</body>
+</html>
