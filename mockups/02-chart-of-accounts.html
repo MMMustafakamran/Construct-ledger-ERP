@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ConstructERP — Chart of Accounts</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',sans-serif;background:#0f172a;color:#e2e8f0;display:flex;min-height:100vh;font-size:14px}
+  .sidebar{width:240px;background:#1e293b;border-right:1px solid #334155;display:flex;flex-direction:column;flex-shrink:0}
+  .logo{padding:22px 18px;border-bottom:1px solid #334155}
+  .logo h1{font-size:17px;font-weight:700;color:#38bdf8}
+  .logo p{font-size:10px;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+  nav{padding:10px 8px;flex:1}
+  nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:#94a3b8;text-decoration:none;font-size:13px;font-weight:500;transition:.15s;margin-bottom:1px}
+  nav a:hover{background:#334155;color:#e2e8f0}
+  nav a.active{background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff;box-shadow:0 4px 12px rgba(14,165,233,.3)}
+  nav .sect{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#475569;padding:14px 12px 4px;font-weight:600}
+  .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+  .topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 28px;border-bottom:1px solid #1e293b;background:#0f172a;flex-shrink:0}
+  .topbar h2{font-size:18px;font-weight:600}
+  .topbar-right{display:flex;align-items:center;gap:14px}
+  .role-badge{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;background:rgba(168,85,247,.15);color:#a855f7;border:1px solid rgba(168,85,247,.3)}
+  .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#a855f7,#ec4899);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+  .content{padding:28px;flex:1;overflow-y:auto}
+  .nav-links{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+  .nav-link{padding:7px 14px;border-radius:8px;background:#1e293b;border:1px solid #334155;color:#94a3b8;text-decoration:none;font-size:12px;font-weight:500;transition:.15s}
+  .nav-link:hover{background:#334155;color:#e2e8f0}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:12px}
+  .search{flex:1;max-width:320px;background:#1e293b;border:1px solid #334155;border-radius:8px;padding:9px 14px;color:#e2e8f0;font-family:inherit;font-size:13px;outline:none}
+  .search:focus{border-color:#0ea5e9}
+  .btn{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:.15s}
+  .btn-primary{background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff}
+  .btn-primary:hover{opacity:.9}
+  .btn-ghost{background:#334155;color:#e2e8f0;border:1px solid #475569}
+  .btn-ghost:hover{background:#475569}
+
+  /* Account Tree */
+  .account-group{margin-bottom:12px}
+  .group-header{display:flex;align-items:center;justify-content:space-between;background:#1e293b;border:1px solid #334155;border-radius:12px;padding:14px 18px;cursor:pointer;transition:.15s}
+  .group-header:hover{border-color:#475569}
+  .group-left{display:flex;align-items:center;gap:12px}
+  .group-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+  .gi-asset{background:rgba(34,197,94,.15)}
+  .gi-liab{background:rgba(239,68,68,.15)}
+  .gi-equity{background:rgba(168,85,247,.15)}
+  .gi-revenue{background:rgba(14,165,233,.15)}
+  .gi-expense{background:rgba(245,158,11,.15)}
+  .group-name{font-size:15px;font-weight:600}
+  .group-code{font-size:11px;color:#64748b;margin-top:2px}
+  .group-total{font-size:15px;font-weight:700}
+  .gt-pos{color:#22c55e}
+  .gt-neg{color:#ef4444}
+  .gt-blue{color:#0ea5e9}
+  .gt-purple{color:#a855f7}
+  .gt-yellow{color:#f59e0b}
+  .chevron{color:#64748b;font-size:12px;transition:.2s}
+
+  .account-list{margin-top:2px;border-left:2px solid #334155;margin-left:30px;padding-left:16px}
+  .account-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:8px;margin-bottom:2px;transition:.15s;cursor:pointer}
+  .account-item:hover{background:#1e293b}
+  .acct-left{display:flex;align-items:center;gap:10px}
+  .acct-code{font-size:11px;color:#64748b;font-family:monospace;min-width:50px}
+  .acct-name{font-size:13px;font-weight:500}
+  .acct-type{font-size:10px;padding:2px 8px;border-radius:12px;background:#334155;color:#94a3b8;font-weight:500}
+  .acct-balance{font-size:13px;font-weight:600;color:#cbd5e1}
+
+  .sub-list{border-left:2px solid #1e293b;margin-left:20px;padding-left:12px}
+  .sub-item{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-radius:8px;transition:.15s;cursor:pointer;margin-bottom:1px}
+  .sub-item:hover{background:#1e293b}
+
+  .watermark{text-align:center;padding:16px;font-size:11px;color:#334155;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="logo"><h1>ConstructERP</h1><p>Accounting System</p></div>
+  <nav>
+    <a href="01-dashboard.html">📊 Dashboard</a>
+    <div class="sect">Finance</div>
+    <a href="02-chart-of-accounts.html" class="active">📒 Chart of Accounts</a>
+    <a href="#">🏦 Cash & Bank</a>
+    <div class="sect">Operations</div>
+    <a href="03-fixed-assets.html">🏗️ Fixed Assets</a>
+    <a href="#">🔧 Parts & Spares</a>
+    <a href="04-job-orders.html">📋 Job Orders</a>
+    <div class="sect">People</div>
+    <a href="05-vendors-ap.html">🧾 Vendors / AP</a>
+    <a href="#">💰 Customers / AR</a>
+    <a href="#">👷 Payroll</a>
+    <div class="sect">Reports</div>
+    <a href="#">📈 Reports</a>
+    <a href="#">⚙️ Settings</a>
+  </nav>
+</div>
+<div class="main">
+  <div class="topbar">
+    <h2>Chart of Accounts</h2>
+    <div class="topbar-right">
+      <span class="role-badge">Accountant</span>
+      <span style="font-size:12px;color:#64748b">March 14, 2026</span>
+      <div class="avatar">SA</div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="nav-links">
+      <a class="nav-link" href="01-dashboard.html">🏠 Dashboard</a>
+      <a class="nav-link" href="02-chart-of-accounts.html">📒 Chart of Accounts</a>
+      <a class="nav-link" href="03-fixed-assets.html">🏗️ Fixed Assets</a>
+      <a class="nav-link" href="04-job-orders.html">📋 Job Orders</a>
+      <a class="nav-link" href="05-vendors-ap.html">🧾 Vendors & AP</a>
+    </div>
+    <div class="toolbar">
+      <input class="search" type="text" placeholder="🔍  Search accounts…">
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost">📥 Import</button>
+        <button class="btn btn-primary">+ Add Account</button>
+      </div>
+    </div>
+
+    <!-- ASSETS -->
+    <div class="account-group">
+      <div class="group-header">
+        <div class="group-left">
+          <div class="group-icon gi-asset">💰</div>
+          <div><div class="group-name">1000 — Assets</div><div class="group-code">Current Assets · Fixed Assets · Other Assets</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px"><div class="group-total gt-pos">$1,284,500</div><div class="chevron">▼</div></div>
+      </div>
+      <div class="account-list">
+        <div class="account-item"><div class="acct-left"><span class="acct-code">1100</span><span class="acct-name">Current Assets</span></div><div style="display:flex;align-items:center;gap:12px"><span class="acct-type">Group</span><span class="acct-balance">$284,500</span></div></div>
+        <div class="sub-list">
+          <div class="sub-item"><div class="acct-left"><span class="acct-code">1110</span><span class="acct-name">Bank — Main Account</span></div><span class="acct-balance">$220,000</span></div>
+          <div class="sub-item"><div class="acct-left"><span class="acct-code">1120</span><span class="acct-name">Bank — Payroll Account</span></div><span class="acct-balance">$45,000</span></div>
+          <div class="sub-item"><div class="acct-left"><span class="acct-code">1130</span><span class="acct-name">Petty Cash</span></div><span class="acct-balance">$5,000</span></div>
+          <div class="sub-item"><div class="acct-left"><span class="acct-code">1200</span><span class="acct-name">Accounts Receivable</span></div><span class="acct-balance">$215,000</span></div>
+        </div>
+        <div class="account-item"><div class="acct-left"><span class="acct-code">1500</span><span class="acct-name">Fixed Assets</span></div><div style="display:flex;align-items:center;gap:12px"><span class="acct-type">Group</span><span class="acct-balance">$1,000,000</span></div></div>
+        <div class="sub-list">
+          <div class="sub-item"><div class="acct-left"><span class="acct-code">1510</span><span class="acct-name">Machinery & Equipment</span></div><span class="acct-balance">$850,000</span></div>
+          <div class="sub-item"><div class="acct-left"><span class="acct-code">1520</span><span class="acct-name">Vehicles</span></div><span class="acct-balance">$180,000</span></div>
+          <div class="sub-item"><div class="acct-left"><span class="acct-code">1590</span><span class="acct-name">Accumulated Depreciation</span></div><span class="acct-balance" style="color:#ef4444">-$30,000</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIABILITIES -->
+    <div class="account-group">
+      <div class="group-header">
+        <div class="group-left">
+          <div class="group-icon gi-liab">📤</div>
+          <div><div class="group-name">2000 — Liabilities</div><div class="group-code">Accounts Payable · Loans · Other</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px"><div class="group-total gt-neg">$127,000</div><div class="chevron">▶</div></div>
+      </div>
+    </div>
+
+    <!-- EQUITY -->
+    <div class="account-group">
+      <div class="group-header">
+        <div class="group-left">
+          <div class="group-icon gi-equity">🏛️</div>
+          <div><div class="group-name">3000 — Equity</div><div class="group-code">Owner's Capital · Retained Earnings</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px"><div class="group-total gt-purple">$800,000</div><div class="chevron">▶</div></div>
+      </div>
+    </div>
+
+    <!-- REVENUE -->
+    <div class="account-group">
+      <div class="group-header">
+        <div class="group-left">
+          <div class="group-icon gi-revenue">📈</div>
+          <div><div class="group-name">4000 — Revenue</div><div class="group-code">Contract Revenue · Equipment Rental · Other</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px"><div class="group-total gt-blue">$950,000</div><div class="chevron">▶</div></div>
+      </div>
+    </div>
+
+    <!-- EXPENSES -->
+    <div class="account-group">
+      <div class="group-header">
+        <div class="group-left">
+          <div class="group-icon gi-expense">📉</div>
+          <div><div class="group-name">5000 — Expenses</div><div class="group-code">Labor · Materials · Depreciation · Fuel · Admin</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px"><div class="group-total gt-yellow">$643,000</div><div class="chevron">▶</div></div>
+      </div>
+    </div>
+
+    <div class="watermark">⚠️ MOCKUP — For client validation only</div>
+  </div>
+</div>
+</body>
+</html>

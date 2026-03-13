@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ConstructERP — Fixed Assets</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',sans-serif;background:#0f172a;color:#e2e8f0;display:flex;min-height:100vh;font-size:14px}
+  .sidebar{width:240px;background:#1e293b;border-right:1px solid #334155;display:flex;flex-direction:column;flex-shrink:0}
+  .logo{padding:22px 18px;border-bottom:1px solid #334155}
+  .logo h1{font-size:17px;font-weight:700;color:#38bdf8}
+  .logo p{font-size:10px;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+  nav{padding:10px 8px;flex:1}
+  nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:#94a3b8;text-decoration:none;font-size:13px;font-weight:500;transition:.15s;margin-bottom:1px}
+  nav a:hover{background:#334155;color:#e2e8f0}
+  nav a.active{background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff;box-shadow:0 4px 12px rgba(14,165,233,.3)}
+  nav .sect{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#475569;padding:14px 12px 4px;font-weight:600}
+  .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+  .topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 28px;border-bottom:1px solid #1e293b;background:#0f172a;flex-shrink:0}
+  .topbar h2{font-size:18px;font-weight:600}
+  .topbar-right{display:flex;align-items:center;gap:14px}
+  .role-badge{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;background:rgba(245,158,11,.15);color:#f59e0b;border:1px solid rgba(245,158,11,.3)}
+  .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#ef4444);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+  .content{padding:28px;flex:1;overflow-y:auto}
+  .nav-links{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+  .nav-link{padding:7px 14px;border-radius:8px;background:#1e293b;border:1px solid #334155;color:#94a3b8;text-decoration:none;font-size:12px;font-weight:500;transition:.15s}
+  .nav-link:hover{background:#334155;color:#e2e8f0}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:12px}
+  .search{flex:1;max-width:320px;background:#1e293b;border:1px solid #334155;border-radius:8px;padding:9px 14px;color:#e2e8f0;font-family:inherit;font-size:13px;outline:none}
+  .search:focus{border-color:#0ea5e9}
+  .btn{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:.15s}
+  .btn-primary{background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff}
+  .btn-ghost{background:#334155;color:#e2e8f0;border:1px solid #475569}
+  table{width:100%;border-collapse:collapse}
+  th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:#64748b;padding:10px 14px;border-bottom:1px solid #334155;font-weight:600}
+  td{padding:12px 14px;font-size:13px;border-bottom:1px solid #1e293b;color:#cbd5e1;vertical-align:middle}
+  tr:hover td{background:#1a2436;cursor:pointer}
+  .pill{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:600;display:inline-block}
+  .pill.green{background:rgba(34,197,94,.15);color:#22c55e}
+  .pill.yellow{background:rgba(245,158,11,.15);color:#f59e0b}
+  .pill.red{background:rgba(239,68,68,.15);color:#ef4444}
+  .pill.blue{background:rgba(14,165,233,.15);color:#0ea5e9}
+  .card{background:#1e293b;border:1px solid #334155;border-radius:14px;overflow:hidden}
+  .eq-meta{display:flex;align-items:center;gap:10px}
+  .eq-icon{width:36px;height:36px;background:rgba(14,165,233,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+  .eq-name{font-weight:600;font-size:13px}
+  .eq-num{font-size:11px;color:#64748b;margin-top:2px;font-family:monospace}
+
+  /* Detail panel hint */
+  .hint{font-size:11px;color:#475569;text-align:center;padding:8px 0}
+
+  /* Mini stats */
+  .mini-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+  .mini-stat{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:14px}
+  .ms-lbl{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.8px;font-weight:600}
+  .ms-val{font-size:22px;font-weight:700;margin-top:4px}
+
+  /* Permit warning */
+  .permit-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px;font-size:13px;color:#fbbf24}
+
+  .watermark{text-align:center;padding:16px;font-size:11px;color:#334155;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="logo"><h1>ConstructERP</h1><p>Accounting System</p></div>
+  <nav>
+    <a href="01-dashboard.html">📊 Dashboard</a>
+    <div class="sect">Finance</div>
+    <a href="02-chart-of-accounts.html">📒 Chart of Accounts</a>
+    <a href="#">🏦 Cash & Bank</a>
+    <div class="sect">Operations</div>
+    <a href="03-fixed-assets.html" class="active">🏗️ Fixed Assets</a>
+    <a href="#">🔧 Parts & Spares</a>
+    <a href="04-job-orders.html">📋 Job Orders</a>
+    <div class="sect">People</div>
+    <a href="05-vendors-ap.html">🧾 Vendors / AP</a>
+    <a href="#">💰 Customers / AR</a>
+    <a href="#">👷 Payroll</a>
+    <div class="sect">Reports</div>
+    <a href="#">📈 Reports</a>
+    <a href="#">⚙️ Settings</a>
+  </nav>
+</div>
+<div class="main">
+  <div class="topbar">
+    <h2>Fixed Assets & Equipment</h2>
+    <div class="topbar-right">
+      <span class="role-badge">Site Manager</span>
+      <span style="font-size:12px;color:#64748b">March 14, 2026</span>
+      <div class="avatar">MK</div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="nav-links">
+      <a class="nav-link" href="01-dashboard.html">🏠 Dashboard</a>
+      <a class="nav-link" href="02-chart-of-accounts.html">📒 Chart of Accounts</a>
+      <a class="nav-link" href="03-fixed-assets.html">🏗️ Fixed Assets</a>
+      <a class="nav-link" href="04-job-orders.html">📋 Job Orders</a>
+      <a class="nav-link" href="05-vendors-ap.html">🧾 Vendors & AP</a>
+    </div>
+
+    <!-- Permit Warning -->
+    <div class="permit-warn">⚠️ <strong>2 equipment permits</strong> expiring within 30 days — Action required</div>
+
+    <!-- Mini Stats -->
+    <div class="mini-stats">
+      <div class="mini-stat"><div class="ms-lbl">Total Equipment</div><div class="ms-val" style="color:#38bdf8">18</div></div>
+      <div class="mini-stat"><div class="ms-lbl">Total Value</div><div class="ms-val" style="color:#22c55e">$1.03M</div></div>
+      <div class="mini-stat"><div class="ms-lbl">Depreciation YTD</div><div class="ms-val" style="color:#f59e0b">$87K</div></div>
+      <div class="mini-stat"><div class="ms-lbl">On Job Sites</div><div class="ms-val" style="color:#a855f7">12</div></div>
+    </div>
+
+    <div class="toolbar">
+      <input class="search" type="text" placeholder="🔍  Search equipment by name or EQ#…">
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost">📊 Depreciation Schedule</button>
+        <button class="btn btn-primary">+ Add Equipment</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Equipment</th>
+            <th>Category</th>
+            <th>Purchase Value</th>
+            <th>Book Value</th>
+            <th>Depreciation</th>
+            <th>Assigned To</th>
+            <th>Permit Expiry</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="eq-meta"><div class="eq-icon">🚜</div><div><div class="eq-name">CAT 320 Excavator</div><div class="eq-num">EQ-001</div></div></div></td>
+            <td>Earth Moving</td>
+            <td>$185,000</td>
+            <td>$148,000</td>
+            <td>Straight-line / 10yr</td>
+            <td>JO-001 Highway Bridge</td>
+            <td style="color:#f59e0b">Apr 15, 2026 ⚠️</td>
+            <td><span class="pill green">Active</span></td>
+          </tr>
+          <tr>
+            <td><div class="eq-meta"><div class="eq-icon">🏗️</div><div><div class="eq-name">Liebherr Crane LTM 1100</div><div class="eq-num">EQ-002</div></div></div></td>
+            <td>Lifting</td>
+            <td>$320,000</td>
+            <td>$290,000</td>
+            <td>Straight-line / 15yr</td>
+            <td>JO-002 Office Tower</td>
+            <td style="color:#22c55e">Nov 20, 2026</td>
+            <td><span class="pill green">Active</span></td>
+          </tr>
+          <tr>
+            <td><div class="eq-meta"><div class="eq-icon">🚛</div><div><div class="eq-name">Volvo FMX Dump Truck</div><div class="eq-num">EQ-005</div></div></div></td>
+            <td>Transport</td>
+            <td>$95,000</td>
+            <td>$72,000</td>
+            <td>Straight-line / 8yr</td>
+            <td>JO-004 Road Paving</td>
+            <td style="color:#ef4444">Mar 28, 2026 🔴</td>
+            <td><span class="pill yellow">Permit Soon</span></td>
+          </tr>
+          <tr>
+            <td><div class="eq-meta"><div class="eq-icon">⚙️</div><div><div class="eq-name">Concrete Mixer Model 7</div><div class="eq-num">EQ-008</div></div></div></td>
+            <td>Concrete Works</td>
+            <td>$42,000</td>
+            <td>$30,000</td>
+            <td>Hours-based / 8000hr</td>
+            <td>JO-003 Warehouse</td>
+            <td style="color:#22c55e">Aug 10, 2026</td>
+            <td><span class="pill green">Active</span></td>
+          </tr>
+          <tr>
+            <td><div class="eq-meta"><div class="eq-icon">🔧</div><div><div class="eq-name">Boom Lift JLG 600S</div><div class="eq-num">EQ-011</div></div></div></td>
+            <td>Access & Lift</td>
+            <td>$78,000</td>
+            <td>$65,000</td>
+            <td>Straight-line / 10yr</td>
+            <td>JO-002 Office Tower</td>
+            <td style="color:#22c55e">Jan 5, 2027</td>
+            <td><span class="pill green">Active</span></td>
+          </tr>
+          <tr>
+            <td><div class="eq-meta"><div class="eq-icon">🚧</div><div><div class="eq-name">Road Roller BOMAG</div><div class="eq-num">EQ-013</div></div></div></td>
+            <td>Compaction</td>
+            <td>$65,000</td>
+            <td>$55,000</td>
+            <td>Straight-line / 12yr</td>
+            <td style="color:#64748b">— Idle</td>
+            <td style="color:#22c55e">Jul 30, 2026</td>
+            <td><span class="pill blue">Idle</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="hint">Click any row to view detailed equipment card, component breakdown, and P&L</div>
+    </div>
+
+    <div class="watermark">⚠️ MOCKUP — For client validation only</div>
+  </div>
+</div>
+</body>
+</html>

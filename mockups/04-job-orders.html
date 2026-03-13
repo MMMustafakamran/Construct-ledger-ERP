@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ConstructERP — Job Orders</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',sans-serif;background:#0f172a;color:#e2e8f0;display:flex;min-height:100vh;font-size:14px}
+  .sidebar{width:240px;background:#1e293b;border-right:1px solid #334155;display:flex;flex-direction:column;flex-shrink:0}
+  .logo{padding:22px 18px;border-bottom:1px solid #334155}
+  .logo h1{font-size:17px;font-weight:700;color:#38bdf8}
+  .logo p{font-size:10px;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+  nav{padding:10px 8px;flex:1}
+  nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:#94a3b8;text-decoration:none;font-size:13px;font-weight:500;transition:.15s;margin-bottom:1px}
+  nav a:hover{background:#334155;color:#e2e8f0}
+  nav a.active{background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff}
+  nav .sect{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#475569;padding:14px 12px 4px;font-weight:600}
+  .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+  .topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 28px;border-bottom:1px solid #1e293b;background:#0f172a;flex-shrink:0}
+  .topbar h2{font-size:18px;font-weight:600}
+  .topbar-right{display:flex;align-items:center;gap:14px}
+  .role-badge{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;background:rgba(34,197,94,.15);color:#22c55e;border:1px solid rgba(34,197,94,.3)}
+  .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#0ea5e9);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+  .content{padding:28px;flex:1;overflow-y:auto}
+  .nav-links{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+  .nav-link{padding:7px 14px;border-radius:8px;background:#1e293b;border:1px solid #334155;color:#94a3b8;text-decoration:none;font-size:12px;font-weight:500;transition:.15s}
+  .nav-link:hover{background:#334155;color:#e2e8f0}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:12px}
+  .search{flex:1;max-width:320px;background:#1e293b;border:1px solid #334155;border-radius:8px;padding:9px 14px;color:#e2e8f0;font-family:inherit;font-size:13px;outline:none}
+  .btn{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:.15s}
+  .btn-primary{background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff}
+  .btn-ghost{background:#334155;color:#e2e8f0;border:1px solid #475569}
+  .pill{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:600;display:inline-block}
+  .pill.green{background:rgba(34,197,94,.15);color:#22c55e}
+  .pill.yellow{background:rgba(245,158,11,.15);color:#f59e0b}
+  .pill.red{background:rgba(239,68,68,.15);color:#ef4444}
+  .pill.blue{background:rgba(14,165,233,.15);color:#0ea5e9}
+
+  /* Job Cards */
+  .job-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:24px}
+  .job-card{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:20px;transition:.2s;cursor:pointer}
+  .job-card:hover{transform:translateY(-2px);border-color:#475569;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+  .jc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+  .jc-id{font-size:11px;color:#64748b;font-family:monospace}
+  .jc-name{font-size:15px;font-weight:700;margin-top:2px}
+  .jc-client{font-size:12px;color:#94a3b8;margin-top:4px}
+
+  .progress-bar{height:6px;background:#334155;border-radius:3px;margin:14px 0 6px;overflow:hidden}
+  .progress-fill{height:100%;border-radius:3px}
+  .pf-green{background:linear-gradient(90deg,#22c55e,#16a34a)}
+  .pf-yellow{background:linear-gradient(90deg,#f59e0b,#d97706)}
+  .pf-red{background:linear-gradient(90deg,#ef4444,#dc2626)}
+
+  .jc-numbers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+  .jc-num{text-align:center;background:#0f172a;border-radius:8px;padding:8px}
+  .jn-lbl{font-size:10px;color:#64748b;margin-bottom:3px}
+  .jn-val{font-size:13px;font-weight:700}
+
+  .jc-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid #334155}
+  .jc-equip{font-size:11px;color:#64748b}
+
+  /* Detail Modal Style Row */
+  .cost-breakdown{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:20px;margin-bottom:16px}
+  .cb-title{font-size:14px;font-weight:600;margin-bottom:14px}
+  .cost-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b}
+  .cost-row:last-child{border:none;font-weight:700;color:#e2e8f0}
+  .cr-label{font-size:13px;color:#94a3b8;display:flex;align-items:center;gap:8px}
+  .cr-val{font-size:13px;font-weight:600}
+
+  .watermark{text-align:center;padding:16px;font-size:11px;color:#334155;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="logo"><h1>ConstructERP</h1><p>Accounting System</p></div>
+  <nav>
+    <a href="01-dashboard.html">📊 Dashboard</a>
+    <div class="sect">Finance</div>
+    <a href="02-chart-of-accounts.html">📒 Chart of Accounts</a>
+    <a href="#">🏦 Cash & Bank</a>
+    <div class="sect">Operations</div>
+    <a href="03-fixed-assets.html">🏗️ Fixed Assets</a>
+    <a href="#">🔧 Parts & Spares</a>
+    <a href="04-job-orders.html" class="active">📋 Job Orders</a>
+    <div class="sect">People</div>
+    <a href="05-vendors-ap.html">🧾 Vendors / AP</a>
+    <a href="#">💰 Customers / AR</a>
+    <a href="#">👷 Payroll</a>
+    <div class="sect">Reports</div>
+    <a href="#">📈 Reports</a>
+    <a href="#">⚙️ Settings</a>
+  </nav>
+</div>
+<div class="main">
+  <div class="topbar">
+    <h2>Job Orders</h2>
+    <div class="topbar-right">
+      <span class="role-badge">Site Manager</span>
+      <span style="font-size:12px;color:#64748b">March 14, 2026</span>
+      <div class="avatar">MK</div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="nav-links">
+      <a class="nav-link" href="01-dashboard.html">🏠 Dashboard</a>
+      <a class="nav-link" href="02-chart-of-accounts.html">📒 Chart of Accounts</a>
+      <a class="nav-link" href="03-fixed-assets.html">🏗️ Fixed Assets</a>
+      <a class="nav-link" href="04-job-orders.html">📋 Job Orders</a>
+      <a class="nav-link" href="05-vendors-ap.html">🧾 Vendors & AP</a>
+    </div>
+    <div class="toolbar">
+      <input class="search" type="text" placeholder="🔍  Search job orders…">
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost">📊 Cost Report</button>
+        <button class="btn btn-primary">+ New Job Order</button>
+      </div>
+    </div>
+
+    <!-- Job Cards -->
+    <div class="job-grid">
+      <div class="job-card">
+        <div class="jc-top">
+          <div><div class="jc-id">JO-2024-001</div><div class="jc-name">Highway Bridge Expansion</div><div class="jc-client">👤 City Infrastructure Dept</div></div>
+          <span class="pill green">On Track</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill pf-green" style="width:69%"></div></div>
+        <div style="font-size:11px;color:#64748b;text-align:right">69% complete</div>
+        <div class="jc-numbers">
+          <div class="jc-num"><div class="jn-lbl">Budget</div><div class="jn-val" style="color:#e2e8f0">$450K</div></div>
+          <div class="jc-num"><div class="jn-lbl">Spent</div><div class="jn-val" style="color:#f59e0b">$312K</div></div>
+          <div class="jc-num"><div class="jn-lbl">Remaining</div><div class="jn-val" style="color:#22c55e">$138K</div></div>
+        </div>
+        <div class="jc-footer"><div class="jc-equip">🏗️ 3 equipment assigned</div><div style="font-size:11px;color:#64748b">Due: Jun 30, 2026</div></div>
+      </div>
+
+      <div class="job-card">
+        <div class="jc-top">
+          <div><div class="jc-id">JO-2024-002</div><div class="jc-name">Office Tower — Phase 2</div><div class="jc-client">👤 Horizon Real Estate</div></div>
+          <span class="pill yellow">Near Completion</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill pf-yellow" style="width:82%"></div></div>
+        <div style="font-size:11px;color:#64748b;text-align:right">82% complete</div>
+        <div class="jc-numbers">
+          <div class="jc-num"><div class="jn-lbl">Budget</div><div class="jn-val" style="color:#e2e8f0">$1.2M</div></div>
+          <div class="jc-num"><div class="jn-lbl">Spent</div><div class="jn-val" style="color:#f59e0b">$980K</div></div>
+          <div class="jc-num"><div class="jn-lbl">Remaining</div><div class="jn-val" style="color:#22c55e">$220K</div></div>
+        </div>
+        <div class="jc-footer"><div class="jc-equip">🏗️ 5 equipment assigned</div><div style="font-size:11px;color:#64748b">Due: May 15, 2026</div></div>
+      </div>
+
+      <div class="job-card" style="border-color:rgba(239,68,68,.35)">
+        <div class="jc-top">
+          <div><div class="jc-id">JO-2024-003</div><div class="jc-name">Industrial Warehouse Build</div><div class="jc-client">👤 Pak Logistics Group</div></div>
+          <span class="pill red">Over Budget</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill pf-red" style="width:100%"></div></div>
+        <div style="font-size:11px;color:#ef4444;text-align:right">Budget exceeded by $15K ⚠️</div>
+        <div class="jc-numbers">
+          <div class="jc-num"><div class="jn-lbl">Budget</div><div class="jn-val" style="color:#e2e8f0">$280K</div></div>
+          <div class="jc-num"><div class="jn-lbl">Spent</div><div class="jn-val" style="color:#ef4444">$295K</div></div>
+          <div class="jc-num"><div class="jn-lbl">Overage</div><div class="jn-val" style="color:#ef4444">-$15K</div></div>
+        </div>
+        <div class="jc-footer"><div class="jc-equip">🏗️ 2 equipment assigned</div><div style="font-size:11px;color:#64748b">Due: Apr 1, 2026</div></div>
+      </div>
+
+      <div class="job-card">
+        <div class="jc-top">
+          <div><div class="jc-id">JO-2024-004</div><div class="jc-name">Ring Road Paving Section 4</div><div class="jc-client">👤 Nat. Highway Authority</div></div>
+          <span class="pill blue">In Progress</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill pf-green" style="width:25%"></div></div>
+        <div style="font-size:11px;color:#64748b;text-align:right">25% complete</div>
+        <div class="jc-numbers">
+          <div class="jc-num"><div class="jn-lbl">Budget</div><div class="jn-val" style="color:#e2e8f0">$180K</div></div>
+          <div class="jc-num"><div class="jn-lbl">Spent</div><div class="jn-val" style="color:#f59e0b">$45K</div></div>
+          <div class="jc-num"><div class="jn-lbl">Remaining</div><div class="jn-val" style="color:#22c55e">$135K</div></div>
+        </div>
+        <div class="jc-footer"><div class="jc-equip">🏗️ 4 equipment assigned</div><div style="font-size:11px;color:#64748b">Due: Sep 30, 2026</div></div>
+      </div>
+    </div>
+
+    <!-- Cost Breakdown for selected job -->
+    <div class="cost-breakdown">
+      <div class="cb-title">📊 Cost Breakdown — JO-2024-001 Highway Bridge (click any job to see this)</div>
+      <div class="cost-row"><div class="cr-label">👷 Labor / Payroll</div><div class="cr-val" style="color:#94a3b8">$98,000</div></div>
+      <div class="cost-row"><div class="cr-label">🔩 Materials (Parts & Spares)</div><div class="cr-val" style="color:#94a3b8">$124,000</div></div>
+      <div class="cost-row"><div class="cr-label">🏗️ Equipment Usage — EQ-001 CAT 320</div><div class="cr-val" style="color:#94a3b8">$42,000</div></div>
+      <div class="cost-row"><div class="cr-label">🏗️ Equipment Usage — EQ-003 Crane</div><div class="cr-val" style="color:#94a3b8">$31,000</div></div>
+      <div class="cost-row"><div class="cr-label">🚛 Transport & Fuel</div><div class="cr-val" style="color:#94a3b8">$17,000</div></div>
+      <div class="cost-row"><div class="cr-label"><strong>Total Spent</strong></div><div class="cr-val">$312,000</div></div>
+    </div>
+
+    <div class="watermark">⚠️ MOCKUP — For client validation only</div>
+  </div>
+</div>
+</body>
+</html>
