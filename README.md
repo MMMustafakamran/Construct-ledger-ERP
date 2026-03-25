@@ -1,82 +1,71 @@
-# Construction Accounting Prototype
+# Barebones Accounting Foundation
 
-This repository documents a prototype for a construction company that currently manages accounting operations through spreadsheets and manual ledgers.
+This repository now contains the first implementation foundation for a barebones accounting product. The broader client vision is still a construction ERP, but the codebase is intentionally starting smaller with the accounting core.
 
-The client's broader vision points toward a construction ERP, but the immediate goal is smaller: build a believable, barebones accounting prototype that proves the core workflow can move into software.
+## Current Stack
 
-## What The Client Wants
+- `frontend/`: React + TypeScript + Vite
+- `backend/`: Express + TypeScript
+- future database target: PostgreSQL
 
-The source notes suggest a business that needs one system to eventually manage:
+## Team Consistency
 
-- chart of accounts and general ledger
-- vendors and customers
-- accounts payable and accounts receivable
-- cash and bank tracking
-- fixed assets and equipment
-- parts and spares
-- payroll
-- job order costing
+This repo now includes baseline setup controls so teammates stay aligned:
 
-For now, the prototype should focus on the accounting foundation first, not the full ERP scope.
+- `.nvmrc` and `.node-version` pin Node to `22.x`
+- `.npmrc` enforces exact dependency installs and engine checks
+- `.editorconfig` standardizes whitespace and formatting basics
+- `.gitattributes` standardizes line endings across Windows/macOS/Linux
+- `backend/.env.example` and `frontend/.env.example` define the shared env shape
+- `CONTRIBUTING.md` and [development setup](C:\Users\dynamic computer\Desktop\work\projects\rayyan project\docs\development-setup.md) document the canonical setup flow
 
-## Current Prototype Direction
+The remaining missing piece is the root `package-lock.json`, which should be generated and committed the first time dependencies are installed successfully.
 
-The recommended prototype is a simple accounting MVP that covers:
+## What Has Been Implemented
 
-- chart of accounts
-- vendors
-- customers
-- vendor invoices
-- customer invoices
-- payments and receipts
-- cash and bank balances
-- dashboard summaries
+- workspace structure for frontend and backend
+- backend API skeleton
+- core accounting types for:
+  - accounts
+  - transactions
+  - journal entry lines
+- seeded in-memory accounting data
+- foundation endpoints:
+  - `GET /api/health`
+  - `GET /api/accounts`
+  - `GET /api/transactions`
+  - `GET /api/dashboard`
+- frontend shell that reads from the API and renders:
+  - dashboard summary
+  - chart of accounts foundation
+  - recent transactions
 
-This gives the client something easy to review and approve while keeping development effort focused on the most important workflows.
+## Why The Foundation Looks Like This
 
-## Problem Being Solved
+The first implementation slice is meant to prove the architecture and the accounting model before adding business workflows like vendors, customers, invoices, payments, and receipts.
 
-Today, the client's records appear to be spread across Excel files, paper books, and disconnected tracking methods. That makes it difficult to:
+The current backend is intentionally small:
 
-- see what is owed to vendors
-- see what customers still owe
-- track cash position clearly
-- connect invoices with payments
-- understand business performance quickly
+- no database yet
+- no authentication yet
+- no mutations yet
+- no invoice modules yet
 
-The prototype should show how those activities can live in one place with cleaner data entry and clearer visibility.
+That keeps the project easy to extend in the next phase.
 
-## Long-Term Product Vision
+## Next Recommended Steps
 
-Once the accounting base is approved, the system can expand toward the client's broader construction ERP vision, including:
+1. add persistent database setup
+2. implement vendors and customers
+3. implement vendor and customer invoices
+4. implement payments and receipts
+5. connect those actions to transaction and journal entry posting
 
-- equipment and fixed asset registers
-- depreciation tracking
-- parts and spares linked to equipment
-- payroll with cost allocation
-- job order costing
-- equipment-level and job-level profitability
+## Docs
 
-## Recommended Prototype Workflow
-
-1. Create chart of accounts entries.
-2. Create vendor and customer records.
-3. Enter vendor and customer invoices.
-4. Record payments and receipts through cash or bank.
-5. Show payable, receivable, and cash balance changes on a dashboard.
-
-## Repository Guide
-
-- [Project understanding](docs/Project-understanding/what-we-understand.md)
-- [Client extracted notes](docs/Project-understanding/client-givendocs/image-totext.md)
-- [Barebones accounting proposal](docs/proposal-docs/06-barebones-accounting-proposal.md)
-- [Barebones MVP requirements](docs/proposal-docs/07-barebones-mvp-requirements.md)
-- [Prototype plan](docs/proposal-docs/09-barebones-prototype-plan.md)
-
-## Summary
-
-This project should currently be understood as:
-
-- client vision: construction ERP/accounting platform
-- immediate deliverable: barebones accounting prototype
-- purpose of the prototype: validate core accounting workflows before investing in deeper ERP modules
+- [Install guide](C:\Users\dynamic computer\Desktop\work\projects\rayyan project\INSTALL.md)
+- [Project understanding](C:\Users\dynamic computer\Desktop\work\projects\rayyan project\docs\Project-understanding\what-we-understand.md)
+- [Barebones accounting proposal](C:\Users\dynamic computer\Desktop\work\projects\rayyan project\docs\proposal-docs\06-barebones-accounting-proposal.md)
+- [Barebones MVP requirements](C:\Users\dynamic computer\Desktop\work\projects\rayyan project\docs\proposal-docs\07-barebones-mvp-requirements.md)
+- [Barebones visual diagram](C:\Users\dynamic computer\Desktop\work\projects\rayyan project\docs\proposal-docs\08-barebones-visual-diagram.md)
+- [Development setup](C:\Users\dynamic computer\Desktop\work\projects\rayyan project\docs\development-setup.md)
