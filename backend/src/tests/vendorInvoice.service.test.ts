@@ -9,7 +9,7 @@ describe("Vendor Invoice Service", () => {
   beforeAll(async () => {
     // Get valid IDs from the database (seeded data)
     const vendor = await prisma.vendor.findFirst();
-    const account = await prisma.account.findFirst({ where: { type: "expense" } });
+    const account = await prisma.account.findFirst({ where: { category: "expense" } });
     
     if (!vendor || !account) throw new Error("Seed data missing for tests");
     

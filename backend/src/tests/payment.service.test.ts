@@ -12,7 +12,7 @@ describe("Payment Service", () => {
 
   beforeAll(async () => {
     const vendor = await prisma.vendor.findFirst();
-    const account = await prisma.account.findFirst({ where: { type: "expense" } });
+    const account = await prisma.account.findFirst({ where: { category: "expense" } });
     const bank = await prisma.bankAccount.findFirst();
     
     if (!vendor || !account || !bank) throw new Error("Seed data missing for tests");

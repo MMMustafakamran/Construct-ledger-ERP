@@ -25,7 +25,7 @@ export const accountingService = {
       // Assets / Expenses increase with Debit
       // Liabilities / Equity / Revenue increase with Credit
       // For prototype display, we can just show Debit - Credit or similar
-      const balance = ['Asset', 'Expense'].includes(account.category) 
+      const balance = ['asset', 'expense'].includes(account.category) 
         ? debits - credits 
         : credits - debits;
 
