@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "./components/layout/Layout";
+import LandingPage from "./pages/LandingPage";
 import DashboardPage from "./pages/DashboardPage";
 import AccountsPage from "./pages/AccountsPage";
 import VendorsPage from "./pages/VendorsPage";
@@ -17,6 +18,7 @@ import JournalEntriesPage from "./pages/JournalEntriesPage";
 import StubPage from "./pages/StubPage";
 
 export const router = createBrowserRouter([
+  { path: "/landing", element: <LandingPage /> },
   {
     path: "/",
     element: <Layout />,

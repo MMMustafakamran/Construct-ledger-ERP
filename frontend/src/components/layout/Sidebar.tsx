@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const sections = [
   {
@@ -41,6 +41,13 @@ const sections = [
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    window.sessionStorage.clear();
+    window.localStorage.clear();
+    navigate("/landing");
+  };
 
   return (
     <aside className="sidebar">
@@ -70,6 +77,12 @@ const Sidebar: React.FC = () => {
             </nav>
           </div>
         ))}
+      </div>
+
+      <div className="sidebar-footer">
+        <button className="sidebar-logout" type="button" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
     </aside>
   );

@@ -18,8 +18,6 @@ const DashboardPage: React.FC = () => {
   const cashBalance = summary ? formatCurrency(summary.cashBalance) : "$0.00";
   const receivables = summary ? formatCurrency(summary.receivables) : "$0.00";
   const payables = summary ? formatCurrency(summary.payables) : "$0.00";
-  const totalTransactions = summary ? summary.totalTransactions : 0;
-  const recentCount = summary?.recentTransactions.length ?? 0;
 
   return (
     <div className="dashboard-page">
@@ -29,31 +27,21 @@ const DashboardPage: React.FC = () => {
         description="Live figures pulled directly from the backend dashboard endpoint."
       />
 
-      <section className="dashboard-hero">
-        <article className="dashboard-hero-main">
-          <p className="card-kicker">Cash balance</p>
-          <h2>{cashBalance}</h2>
-          <p className="card-note">Current cash position across connected bank accounts.</p>
-          <div className="dashboard-hero-foot">
-            <Badge variant="neutral">Recent entries: {recentCount}</Badge>
-            <span className="hero-caption">No placeholder analytics or fabricated alerts.</span>
-          </div>
+      <section className="dashboard-metric-grid">
+        <article className="dashboard-metric-card dashboard-metric-card-primary">
+          <p className="dashboard-metric-label">Total cash balance</p>
+          <strong className="dashboard-metric-value">{cashBalance}</strong>
         </article>
 
-        <aside className="dashboard-stat-rail">
-          <article className="dashboard-stat-card">
-            <span className="dashboard-stat-label">Receivables</span>
-            <strong>{receivables}</strong>
-          </article>
-          <article className="dashboard-stat-card">
-            <span className="dashboard-stat-label">Payables</span>
-            <strong>{payables}</strong>
-          </article>
-          <article className="dashboard-stat-card">
-            <span className="dashboard-stat-label">Total transactions</span>
-            <strong>{totalTransactions}</strong>
-          </article>
-        </aside>
+        <article className="dashboard-metric-card">
+          <p className="dashboard-metric-label">Receivables</p>
+          <strong className="dashboard-metric-value">{receivables}</strong>
+        </article>
+
+        <article className="dashboard-metric-card">
+          <p className="dashboard-metric-label">Payables</p>
+          <strong className="dashboard-metric-value">{payables}</strong>
+        </article>
       </section>
 
       <section className="dashboard-section">
@@ -62,7 +50,7 @@ const DashboardPage: React.FC = () => {
             <p className="section-kicker">Recent activity</p>
             <h2 className="section-title">Ledger entries</h2>
           </div>
-          <span className="section-microcopy">Latest rows from the API</span>
+          <span className="section-microcopy">{summary?.recentTransactions.length ?? 0} rows</span>
         </div>
 
         <div className="surface-card">
