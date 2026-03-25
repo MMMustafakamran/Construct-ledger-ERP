@@ -70,23 +70,6 @@ const Sidebar: React.FC = () => {
             </nav>
           </div>
         ))}
-
-        <div className="sidebar-footer">
-          <button className="sidebar-cta" type="button">
-            + New Entry
-          </button>
-          <div className="sidebar-links">
-            <button className="sidebar-link" type="button">Settings</button>
-            <button className="sidebar-link" type="button">Support</button>
-          </div>
-          <div className="sidebar-user">
-            <div className="sidebar-user-avatar">JD</div>
-            <div>
-              <strong>Admin</strong>
-              <span>Senior Accountant</span>
-            </div>
-          </div>
-        </div>
       </div>
     </aside>
   );

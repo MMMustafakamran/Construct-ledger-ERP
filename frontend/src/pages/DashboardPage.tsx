@@ -124,7 +124,7 @@ const DashboardPage: React.FC = () => {
           <p className="section-kicker">Recent activity</p>
           <h2 className="section-title">Ledger entries</h2>
         </div>
-        <button className="ghost-button" type="button">View comprehensive ledger →</button>
+        <button className="ghost-button" type="button">View comprehensive ledger -&gt;</button>
       </div>
 
       <div className="surface-card">

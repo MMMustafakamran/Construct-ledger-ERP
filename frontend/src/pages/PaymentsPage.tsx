@@ -63,8 +63,8 @@ const PaymentsPage: React.FC = () => {
     <div className="payments-page">
       <PageHeader title="Vendor Payments" />
       
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '32px' }}>
-        <div className="form-card" style={{ maxWidth: 'none' }}>
+      <div className="payments-layout">
+        <div className="form-card">
           <h3 className="section-title" style={{ marginBottom: '20px' }}>Record New Payment</h3>
           <form onSubmit={handleSubmit}>
             <FormField label="Unpaid Bill / Invoice" required>

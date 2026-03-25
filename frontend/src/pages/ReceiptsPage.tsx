@@ -161,7 +161,7 @@ const ReceiptsPage: React.FC = () => {
             </select>
           </FormField>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className="form-grid-2">
             <FormField label="Receipt Amount" required>
               <input type="number" step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)} required />
             </FormField>

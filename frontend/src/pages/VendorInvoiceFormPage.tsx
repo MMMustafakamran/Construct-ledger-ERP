@@ -74,7 +74,7 @@ const VendorInvoiceFormPage: React.FC = () => {
             </select>
           </FormField>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+          <div className="form-grid-2">
             <FormField label="Bill / Invoice #" required>
               <input value={invoiceNumber} onChange={(e) => setInvoiceNumber(e.target.value)} required />
             </FormField>

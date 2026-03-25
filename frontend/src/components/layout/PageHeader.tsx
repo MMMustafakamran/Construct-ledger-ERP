@@ -19,8 +19,8 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, eyebrow, description, ac
         {eyebrow && <p className="page-eyebrow">{eyebrow}</p>}
         <div className="header-title-row">
           {backPath && (
-            <button className="back-button" onClick={() => navigate(backPath)}>
-              ←
+            <button className="back-button" type="button" onClick={() => navigate(backPath)} aria-label="Go back">
+              {"<-"}
             </button>
           )}
           <h1 className="page-title">{title}</h1>
@@ -28,7 +28,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, eyebrow, description, ac
         {description && <p className="page-description">{description}</p>}
       </div>
       {actionLabel && (
-        <button className="primary-button" onClick={onAction}>
+        <button className="primary-button" type="button" onClick={onAction}>
           {actionLabel}
         </button>
       )}
