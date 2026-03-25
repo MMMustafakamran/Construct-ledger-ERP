@@ -32,12 +32,13 @@ describe("DashboardPage", () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText(/Executive Overview/i)).toBeInTheDocument();
+    expect(screen.getByText(/Dashboard/i)).toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText(/\$1,000.00/i)).toBeInTheDocument();
       expect(screen.getByText(/\$500.00/i)).toBeInTheDocument();
       expect(screen.getByText(/\$5,000.00/i)).toBeInTheDocument();
+      expect(screen.getByText(/Total transactions/i)).toBeInTheDocument();
     });
   });
 });
