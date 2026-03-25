@@ -15,15 +15,21 @@ interface TableProps<T> {
 
 function Table<T extends { id: string | number }>({ columns, data, onRowClick, isLoading }: TableProps<T>) {
   if (isLoading) {
-    return <div className="table-loading">Loading...</div>;
+    return (
+      <div className="table-state">
+        <div className="skeleton-line wide" />
+        <div className="skeleton-line" />
+        <div className="skeleton-line medium" />
+      </div>
+    );
   }
 
   if (data.length === 0) {
-    return <div className="table-empty">No records found.</div>;
+    return <div className="table-state">No records found yet.</div>;
   }
 
   return (
-    <div className="table-container">
+    <div className="table-shell">
       <table className="data-table">
         <thead>
           <tr>

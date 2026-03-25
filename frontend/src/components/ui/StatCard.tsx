@@ -13,18 +13,14 @@ interface StatCardProps {
 
 const StatCard: React.FC<StatCardProps> = ({ label, value, icon, trend, variant = "primary" }) => {
   return (
-    <div className={`stat-card ${variant}`}>
+    <article className={`stat-card ${variant}`}>
       <div className="stat-card-header">
         <span className="stat-label">{label}</span>
         {icon && <span className="stat-icon">{icon}</span>}
       </div>
       <div className="stat-value">{value}</div>
-      {trend && (
-        <div className={`stat-trend ${trend.isUp ? "up" : "down"}`}>
-          {trend.isUp ? "↑" : "↓"} {trend.value}
-        </div>
-      )}
-    </div>
+      {trend && <div className={`stat-trend ${trend.isUp ? "up" : "down"}`}>{trend.isUp ? "↑" : "↓"} {trend.value}</div>}
+    </article>
   );
 };
 
