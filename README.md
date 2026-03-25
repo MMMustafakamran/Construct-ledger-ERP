@@ -61,6 +61,7 @@ That keeps the project easy to extend in the next phase.
 
 ## Docs
 
+- [LLM context](./LLM_CONTEXT.md)
 - [Install guide](./Setup-guide.md)
 - [Project understanding](./docs/Project-understanding/what-we-understand.md)
 - [Barebones accounting proposal](./docs/proposal-docs/06-barebones-accounting-proposal.md)

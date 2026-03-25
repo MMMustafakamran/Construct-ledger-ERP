@@ -26,11 +26,24 @@ The first version should only include these modules:
 
 ## Optional Construction-Specific Addition
 
-If the client wants one construction-specific feature without turning this into a full ERP, add only:
+If the client wants construction-specific context without turning this into a full ERP, add only:
 
-- optional job order tag on invoices, payments, and ledger lines
+- optional `Job Order #` reference field on invoices and payments
+- optional `Equipment #` reference field on invoices and payments
 
-This keeps the software useful for construction jobs without introducing full job costing complexity.
+These two fields let the client tag every transaction to a job or piece of equipment. This signals construction-readiness without introducing full job costing or fixed asset complexity.
+
+## Nice To Mock In The Prototype
+
+The prototype can include lightweight placeholder screens that show future direction without building full logic:
+
+- a read-only journal entries view (auto-generated from invoice/payment actions)
+- AP and AR summary cards
+- a stub Job Orders page with sample fields
+- a stub Equipment Register page with sample fields
+- a reports placeholder screen listing Trial Balance and P&L as "coming next"
+
+These help the client see the full vision without committing to ERP complexity in version one.
 
 ## What Is Not Included
 

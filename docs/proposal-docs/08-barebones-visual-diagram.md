@@ -158,8 +158,10 @@ erDiagram
 - First we create the list of accounts.
 - Then we create vendors and customers.
 - When an invoice is created, the system knows who it belongs to and which account it affects.
+- Invoices can be optionally tagged with a `Job Order #` or `Equipment #` to track which job or machine a cost or revenue belongs to.
 - When payment or receipt happens, cash/bank is updated.
-- Behind the scenes, journal entries keep the accounting correct.
+- Behind the scenes, journal entries keep the accounting correct — the client can view a read-only journal entries log.
+- Stub screens for Job Orders and Equipment Register show where the system will expand in the next phase.
 
 ## 3. Client-Friendly Version
 

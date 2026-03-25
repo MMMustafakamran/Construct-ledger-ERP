@@ -67,38 +67,53 @@ Build a simple web-based accounting system that replaces spreadsheet-led bookkee
 
 ## 3. Nice-To-Have But Not Required
 
-- optional job reference field
-- PDF invoice print layout
+- optional `Job Order #` reference field on invoices and payments
+- optional `Equipment #` reference field on invoices and payments
 - simple filters and search
+- PDF invoice print layout
 - export to Excel
 
-## 4. Out Of Scope
+## 4. Nice To Mock In The Prototype (Visual Only, No Full Logic)
+
+These screens help the client see the future direction without requiring full implementation:
+
+- read-only journal entries view (auto-generated from invoice and payment actions)
+- AP and AR summary cards or tables
+- stub Job Orders page showing how accounting entries can link to jobs later
+- stub Equipment Register page with sample fields only
+- reports placeholder screen listing Trial Balance and P&L as "coming next"
+
+## 5. Out Of Scope
 
 - payroll
-- inventory
-- fixed assets
-- depreciation
-- equipment tracking
-- job costing engine
+- parts and spares inventory
+- full fixed assets module
+- depreciation engine
+- full job costing engine
+- equipment profitability reports
+- full purchase order workflow
 - tax engine
 - advanced approval flows
-- reconciliation workflows
+- bank reconciliation workflows
+- PDF generation
+- exports
 
-## 5. Success Criteria
+## 6. Success Criteria
 
 The barebones MVP succeeds if the client can:
 
 - create accounts, vendors, and customers
 - record purchase and sales invoices
 - record payments and receipts
+- tag transactions with an optional Job Order # or Equipment # reference
 - see what is due and payable
 - see current cash position
 - stop depending on manual ledgers for basic accounting tracking
 
-## 6. Recommended Core Workflow
+## 7. Recommended Core Workflow
 
 1. create vendor or customer
-2. create invoice
+2. create invoice (optionally tag with Job Order # or Equipment #)
 3. record payment or receipt
 4. update cash/bank balance
 5. reflect impact on dashboard and ledger summary
