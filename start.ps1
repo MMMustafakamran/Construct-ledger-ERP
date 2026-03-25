@@ -21,4 +21,3 @@ Start-Process powershell.exe -ArgumentList "-NoExit", "-Command", $frontendComma
 Write-Host ""
 Write-Host "Backend:  http://localhost:4000"
 Write-Host "Frontend: http://localhost:5173"
-

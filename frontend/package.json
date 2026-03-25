@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "node server.mjs",
-    "build": "tsc -b",
-    "preview": "node server.mjs"
+    "dev": "vite --configLoader native",
+    "build": "tsc -b && vite build --configLoader native",
+    "preview": "vite preview --port 5173"
   },
   "dependencies": {
     "react": "19.0.0",

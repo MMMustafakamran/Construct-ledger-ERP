@@ -4,7 +4,7 @@ This repository now contains the first implementation foundation for a barebones
 
 ## Current Stack
 
-- `frontend/`: static Node-served UI with plain JavaScript
+- `frontend/`: Vite + React + TypeScript
 - `backend/`: Express + TypeScript
 - future database target: PostgreSQL
 
@@ -12,13 +12,12 @@ This repository now contains the first implementation foundation for a barebones
 
 This repo now includes baseline setup controls so teammates stay aligned:
 
-- `.nvmrc` and `.node-version` pin Node to `22.x`
 - `.npmrc` enforces exact dependency installs and engine checks
 - `.editorconfig` standardizes whitespace and formatting basics
 - `.gitattributes` standardizes line endings across Windows/macOS/Linux
 - `backend/.env.example` and `frontend/.env.example` define the shared env shape
 - `setup.ps1` and `start.ps1` give the team a one-command setup and launch flow
-- `CONTRIBUTING.md` and [Setup-guide.md](C:\Users\dynamic computer\Desktop\work\projects\rayyan project\Setup-guide.md) document the canonical setup flow
+- `CONTRIBUTING.md` and [Setup-guide.md](./Setup-guide.md) document the canonical setup flow
 
 ## What Has Been Implemented
 
@@ -62,9 +61,8 @@ That keeps the project easy to extend in the next phase.
 
 ## Docs
 
-- [Install guide](C:\Users\dynamic computer\Desktop\work\projects\rayyan project\Setup-guide.md)
-- [Project understanding](C:\Users\dynamic computer\Desktop\work\projects\rayyan project\docs\Project-understanding\what-we-understand.md)
-- [Barebones accounting proposal](C:\Users\dynamic computer\Desktop\work\projects\rayyan project\docs\proposal-docs\06-barebones-accounting-proposal.md)
-- [Barebones MVP requirements](C:\Users\dynamic computer\Desktop\work\projects\rayyan project\docs\proposal-docs\07-barebones-mvp-requirements.md)
-- [Barebones visual diagram](C:\Users\dynamic computer\Desktop\work\projects\rayyan project\docs\proposal-docs\08-barebones-visual-diagram.md)
-- [Development setup](C:\Users\dynamic computer\Desktop\work\projects\rayyan project\docs\development-setup.md)
+- [Install guide](./Setup-guide.md)
+- [Project understanding](./docs/Project-understanding/what-we-understand.md)
+- [Barebones accounting proposal](./docs/proposal-docs/06-barebones-accounting-proposal.md)
+- [Barebones MVP requirements](./docs/proposal-docs/07-barebones-mvp-requirements.md)
+- [Barebones visual diagram](./docs/proposal-docs/08-barebones-visual-diagram.md)

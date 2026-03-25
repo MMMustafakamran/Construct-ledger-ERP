@@ -23,13 +23,13 @@ If you want the simplest possible setup, run these two scripts from the project 
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\setup.ps1
-powershell -ExecutionPolicy Bypass -File .\start.ps1
+npm start
 ```
 
 What they do:
 
 - `setup.ps1` checks Node, creates `.env` files, and installs dependencies
-- `start.ps1` opens the backend and frontend in separate windows
+- `npm start` opens the backend and frontend in separate windows without re-running setup
 
 ## 3. Manual Setup
 
@@ -85,7 +85,7 @@ Important:
 ### Start The App
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\start.ps1
+npm start
 ```
 
 ## 4. What You Should See
@@ -160,4 +160,4 @@ Each time you work on the project:
 1. open the project folder
 2. pull latest changes
 3. run `npm.cmd install` if dependencies changed
-4. run `powershell -ExecutionPolicy Bypass -File .\start.ps1`
+4. run `npm start`
