@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 
 const titleMap: Record<string, { title: string; subtitle: string }> = {
-  "/": { title: "Portfolio Summary", subtitle: "Financial snapshot for active accounts." },
+  "/": { title: "Dashboard", subtitle: "Live figures pulled directly from the backend dashboard endpoint." },
   "/accounts": { title: "Chart of Accounts", subtitle: "Standardized classification of financial structure." },
   "/bank": { title: "Bank & Cash", subtitle: "Liquidity and account balances." },
   "/vendors": { title: "Vendors", subtitle: "Supplier master records." },
@@ -40,7 +40,7 @@ const TopBar: React.FC = () => {
 
       <div className="topbar-status">
         <div className="topbar-chip">
-          <span>Section</span>
+          <span>Current view</span>
           <strong>{current.title}</strong>
         </div>
         <div className="topbar-chip">
