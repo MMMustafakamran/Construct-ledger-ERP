@@ -57,4 +57,60 @@ describe("API Routes Integration Tests", () => {
     expect(res.status).toBe(400);
     expect(res.body.error).toBe("Validation failed");
   });
+  it("GET /api/vendors should return array", async () => {
+    const res = await request(app).get("/api/vendors");
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  it("GET /api/customers should return array", async () => {
+    const res = await request(app).get("/api/customers");
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  it("POST /api/customers should create a customer", async () => {
+    const res = await request(app).post("/api/customers").send({
+      name: "API Test Customer",
+      phone: "999-9999",
+      address: "123 C St"
+    });
+    expect(res.status).toBe(201);
+  });
+
+  it("GET /api/vendor-invoices should return array", async () => {
+    const res = await request(app).get("/api/vendor-invoices");
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  it("GET /api/customer-invoices should return array", async () => {
+    const res = await request(app).get("/api/customer-invoices");
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  it("GET /api/payments should return array", async () => {
+    const res = await request(app).get("/api/payments");
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  it("GET /api/receipts should return array", async () => {
+    const res = await request(app).get("/api/receipts");
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  it("GET /api/bank-accounts should return array", async () => {
+    const res = await request(app).get("/api/bank-accounts");
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  it("GET /api/journal-entries should return array", async () => {
+    const res = await request(app).get("/api/journal-entries");
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
 });
