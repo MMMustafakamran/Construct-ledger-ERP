@@ -139,6 +139,28 @@ textarea {
   scrollbar-width: thin;
 }
 
+.sidebar-footer {
+  padding-top: 2px;
+}
+
+.sidebar-logout {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 15px;
+  border: 1px solid rgba(176, 69, 53, 0.18);
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--danger);
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.sidebar-logout:hover {
+  transform: translateY(-1px);
+  background: rgba(249, 227, 223, 0.88);
+  border-color: rgba(176, 69, 53, 0.28);
+}
+
 .sidebar-section {
   display: flex;
   flex-direction: column;
@@ -313,75 +335,204 @@ textarea {
   gap: 18px;
 }
 
-.dashboard-hero {
+.dashboard-metric-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr) minmax(0, 1fr);
   gap: 14px;
 }
 
-.dashboard-hero-main,
-.dashboard-stat-card {
+.dashboard-metric-card {
+  min-height: 168px;
+  padding: 24px;
   border-radius: 24px;
   border: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.88);
   box-shadow: var(--shadow-sm);
-}
-
-.dashboard-hero-main {
-  padding: 24px;
-  min-height: 180px;
-  display: grid;
-  align-content: space-between;
-}
-
-.dashboard-hero-main h2 {
-  margin: 6px 0 8px;
-  font-size: clamp(2rem, 3vw, 3rem);
-  line-height: 1;
-  letter-spacing: -0.06em;
-  color: var(--ink);
-}
-
-.dashboard-hero-foot {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
 }
 
-.hero-caption {
-  color: var(--text-muted);
-  font-size: 0.88rem;
+.dashboard-metric-card-primary {
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 32%),
+    linear-gradient(180deg, #194f31 0%, #163f29 100%);
+  border-color: rgba(18, 63, 39, 0.24);
+  color: #f4fbf6;
 }
 
-.dashboard-stat-rail {
-  display: grid;
-  gap: 12px;
-}
-
-.dashboard-stat-card {
-  padding: 18px 20px;
-  display: grid;
-  gap: 8px;
-}
-
-.dashboard-stat-label {
+.dashboard-metric-label {
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--text-soft);
+  color: inherit;
+  opacity: 0.72;
 }
 
-.dashboard-stat-card strong {
-  font-size: 1.4rem;
-  color: var(--ink);
+.dashboard-metric-value {
+  font-size: clamp(1.8rem, 2.8vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: inherit;
+}
+
+.dashboard-metric-card-primary .dashboard-metric-value {
+  color: #ffffff;
 }
 
 .dashboard-section {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.landing-page {
+  min-height: calc(100vh - 40px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 0 48px;
+}
+
+.landing-hero {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.95fr);
+  gap: 24px;
+  padding: 28px;
+  border-radius: 34px;
+  border: 1px solid rgba(29, 35, 24, 0.08);
+  background:
+    radial-gradient(circle at top left, rgba(18, 63, 39, 0.12), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(70, 103, 85, 0.08), transparent 30%),
+    linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(248, 244, 236, 0.96));
+  box-shadow: var(--shadow-md);
+}
+
+.landing-copy {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  padding: 14px 8px;
+}
+
+.landing-kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.landing-copy h1 {
+  margin: 0;
+  max-width: 12ch;
+  font-size: clamp(3rem, 6vw, 5.8rem);
+  line-height: 0.94;
+  letter-spacing: -0.08em;
+  color: var(--ink);
+}
+
+.landing-subtitle {
+  margin: 0;
+  max-width: 56ch;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.landing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.landing-proof {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.landing-proof-card {
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(29, 35, 24, 0.08);
+  background: rgba(255, 255, 255, 0.7);
+  display: grid;
+  gap: 6px;
+}
+
+.landing-proof-card span {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.landing-proof-card strong {
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.landing-panel {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.landing-panel-card {
+  padding: 18px 18px 20px;
+  border-radius: 24px;
+  border: 1px solid rgba(29, 35, 24, 0.08);
+  background: rgba(255, 255, 255, 0.78);
+  display: grid;
+  gap: 10px;
+}
+
+.landing-panel-card-dark {
+  min-height: 220px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 32%),
+    linear-gradient(180deg, #184f30 0%, #123f27 100%);
+  color: #f7fbf7;
+}
+
+.landing-panel-label {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.landing-panel-card-dark strong {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+
+.landing-panel-card-dark span {
+  color: rgba(247, 251, 247, 0.8);
+  line-height: 1.6;
+}
+
+.landing-panel-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.landing-panel-stack .landing-panel-card {
+  min-height: 92px;
+}
+
+.landing-panel-stack .landing-panel-card span {
+  color: var(--text-muted);
+  line-height: 1.6;
 }
 
 .page-header {
@@ -437,6 +588,10 @@ textarea {
   border-radius: 15px;
   cursor: pointer;
   transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .back-button {
@@ -1212,7 +1367,8 @@ textarea {
   .dashboard-content-grid,
   .hero-panel,
   .stat-grid,
-  .dashboard-hero,
+  .dashboard-metric-grid,
+  .landing-hero,
   .payments-layout {
     grid-template-columns: 1fr 1fr;
   }
@@ -1224,8 +1380,13 @@ textarea {
   .hero-panel,
   .dashboard-highlight-row,
   .dashboard-content-grid,
-  .dashboard-hero,
+  .dashboard-metric-grid,
+  .landing-hero,
   .payments-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-proof {
     grid-template-columns: 1fr;
   }
 
