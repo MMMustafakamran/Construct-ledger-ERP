@@ -9,7 +9,23 @@ export function createApp() {
 
   app.use(
     cors({
-      origin: env.FRONTEND_ORIGIN
+      origin(origin, callback) {
+        if (!origin) {
+          callback(null, true);
+          return;
+        }
+
+        const isLocalDevOrigin =
+          /^http:\/\/localhost:\d+$/.test(origin) || /^http:\/\/127\.0\.0\.1:\d+$/.test(origin);
+        const isConfiguredOrigin = origin === env.FRONTEND_ORIGIN;
+
+        if (isLocalDevOrigin || isConfiguredOrigin) {
+          callback(null, true);
+          return;
+        }
+
+        callback(new Error(`Blocked by CORS: ${origin}`));
+      }
     })
   );
   app.use(express.json());
@@ -27,4 +43,3 @@ export function createApp() {
 
   return app;
 }
-

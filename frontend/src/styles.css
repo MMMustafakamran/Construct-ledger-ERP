@@ -1,7 +1,6 @@
 :root {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #e5eef8;
-  background: linear-gradient(180deg, #0b1120 0%, #13203a 100%);
 }
 
 * {
@@ -12,6 +11,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background: linear-gradient(180deg, #0b1120 0%, #13203a 100%);
 }
 
 a {
