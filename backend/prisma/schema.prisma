@@ -1,0 +1,145 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id               String             @id @default(uuid())
+  code             String             @unique
+  name             String
+  category         String             // "asset", "liability", "equity", "revenue", "expense"
+  status           String             @default("active") // "active", "inactive"
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  
+  vendorInvoices   VendorInvoice[]
+  customerInvoices CustomerInvoice[]
+  journalLines     JournalEntryLine[]
+}
+
+model Vendor {
+  id        String          @id @default(uuid())
+  name      String
+  phone     String?
+  address   String?
+  status    String          @default("active")
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  invoices  VendorInvoice[]
+}
+
+model Customer {
+  id        String            @id @default(uuid())
+  name      String
+  phone     String?
+  address   String?
+  status    String            @default("active")
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  invoices  CustomerInvoice[]
+}
+
+model BankAccount {
+  id             String    @id @default(uuid())
+  accountName    String
+  accountNumber  String?
+  currentBalance Float     @default(0)
+  status         String    @default("active")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  payments       Payment[]
+  receipts       Receipt[]
+}
+
+model VendorInvoice {
+  id                 String    @id @default(uuid())
+  vendorId           String
+  expenseAccountId   String
+  invoiceNumber      String
+  invoiceDate        DateTime
+  totalAmount        Float
+  paidAmount         Float     @default(0)
+  status             String    @default("unpaid") // "unpaid", "partial", "paid"
+  jobReference       String?
+  equipmentReference String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  vendor             Vendor    @relation(fields: [vendorId], references: [id])
+  expenseAccount     Account   @relation(fields: [expenseAccountId], references: [id])
+  payments           Payment[]
+}
+
+model CustomerInvoice {
+  id                 String    @id @default(uuid())
+  customerId         String
+  revenueAccountId   String
+  invoiceNumber      String
+  invoiceDate        DateTime
+  totalAmount        Float
+  receivedAmount     Float     @default(0)
+  status             String    @default("unpaid") // "unpaid", "partial", "paid"
+  jobReference       String?
+  equipmentReference String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  customer           Customer  @relation(fields: [customerId], references: [id])
+  revenueAccount     Account   @relation(fields: [revenueAccountId], references: [id])
+  receipts           Receipt[]
+}
+
+model Payment {
+  id              String        @id @default(uuid())
+  vendorInvoiceId String
+  bankAccountId   String
+  paymentDate     DateTime
+  amount          Float
+  reference       String?
+  createdAt       DateTime      @default(now())
+
+  vendorInvoice   VendorInvoice @relation(fields: [vendorInvoiceId], references: [id])
+  bankAccount     BankAccount   @relation(fields: [bankAccountId], references: [id])
+}
+
+model Receipt {
+  id                String          @id @default(uuid())
+  customerInvoiceId String
+  bankAccountId     String
+  receiptDate       DateTime
+  amount            Float
+  reference         String?
+  createdAt         DateTime        @default(now())
+
+  customerInvoice   CustomerInvoice @relation(fields: [customerInvoiceId], references: [id])
+  bankAccount       BankAccount     @relation(fields: [bankAccountId], references: [id])
+}
+
+model JournalEntry {
+  id            String             @id @default(uuid())
+  entryDate     DateTime           @default(now())
+  referenceType String             // "VendorInvoice", "CustomerInvoice", "Payment", "Receipt", "Manual"
+  referenceId   String?
+  memo          String
+  createdAt     DateTime           @default(now())
+
+  lines         JournalEntryLine[]
+}
+
+model JournalEntryLine {
+  id             String       @id @default(uuid())
+  journalEntryId String
+  accountId      String
+  debitAmount    Float        @default(0)
+  creditAmount   Float        @default(0)
+
+  journalEntry   JournalEntry @relation(fields: [journalEntryId], references: [id], onDelete: Cascade)
+  account        Account      @relation(fields: [accountId], references: [id])
+}

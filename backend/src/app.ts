@@ -3,6 +3,7 @@ import express from "express";
 import { env } from "./config/env.js";
 import { accountingRouter } from "./routes/accounting.routes.js";
 import { healthRouter } from "./routes/health.routes.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 export function createApp() {
   const app = express();
@@ -40,6 +41,8 @@ export function createApp() {
 
   app.use("/api/health", healthRouter);
   app.use("/api", accountingRouter);
+
+  app.use(errorHandler);
 
   return app;
 }
