@@ -3,7 +3,38 @@ export interface DashboardSummary {
   payables: number;
   cashBalance: number;
   totalTransactions: number;
-  recentTransactions: any[]; // Journal entries
+  recentTransactions: any[];
+  overdueVendorInvoices: OverdueInvoice[];
+  overdueCustomerInvoices: OverdueInvoice[];
+  aging: AgingSummary;
+  monthlyFlow: MonthlyFlow[];
+}
+
+export interface OverdueInvoice {
+  id: string;
+  invoiceNumber: string;
+  invoiceDate: string;
+  totalAmount: number;
+  outstanding: number;
+  status: string;
+  daysOverdue: number;
+  name: string;
+  type: "vendor" | "customer";
+}
+
+export interface AgingSummary {
+  current: number;
+  thirtyToSixty: number;
+  overSixty: number;
+  currentCount: number;
+  thirtyToSixtyCount: number;
+  overSixtyCount: number;
+}
+
+export interface MonthlyFlow {
+  month: string;
+  inflow: number;
+  outflow: number;
 }
 
 export interface Account {
@@ -21,6 +52,7 @@ export interface Vendor {
   phone?: string;
   address?: string;
   status: string;
+  outstandingBalance?: number;
 }
 
 export interface Customer {
@@ -29,6 +61,7 @@ export interface Customer {
   phone?: string;
   address?: string;
   status: string;
+  outstandingBalance?: number;
 }
 
 export interface BankAccount {
@@ -37,6 +70,15 @@ export interface BankAccount {
   accountNumber: string;
   currentBalance: number;
   status: string;
+}
+
+export interface BankTransaction {
+  id: string;
+  date: string;
+  type: "inflow" | "outflow";
+  description: string;
+  reference?: string;
+  amount: number;
 }
 
 export interface VendorInvoice {
@@ -120,6 +162,9 @@ export const api = {
   },
   getBankAccounts() {
     return fetchJson<BankAccount[]>("/bank-accounts");
+  },
+  getBankAccountTransactions(id: string) {
+    return fetchJson<BankTransaction[]>(`/bank-accounts/${id}/transactions`);
   },
 
   // Vendors

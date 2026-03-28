@@ -7,7 +7,7 @@ import { getCustomerInvoices, getCustomerInvoice, createCustomerInvoice } from "
 import { getPayments, createPayment } from "../services/payment.service.js";
 import { getReceipts, createReceipt } from "../services/receipt.service.js";
 import { getJournalEntries } from "../services/journalEntry.service.js";
-import { getBankAccounts, getBankAccount } from "../services/bankAccount.service.js";
+import { getBankAccounts, getBankAccount, getBankAccountTransactions } from "../services/bankAccount.service.js";
 
 const accountingRouter = Router();
 
@@ -44,6 +44,13 @@ accountingRouter.get("/bank-accounts", async (req, res, next) => {
 accountingRouter.get("/bank-accounts/:id", async (req, res, next) => {
   try {
     const data = await getBankAccount(req.params.id);
+    res.json(data);
+  } catch (err) { next(err); }
+});
+
+accountingRouter.get("/bank-accounts/:id/transactions", async (req, res, next) => {
+  try {
+    const data = await getBankAccountTransactions(req.params.id);
     res.json(data);
   } catch (err) { next(err); }
 });

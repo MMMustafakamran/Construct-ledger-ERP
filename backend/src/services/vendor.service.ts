@@ -11,8 +11,22 @@ export const vendorSchema = z.object({
 export type VendorInput = z.infer<typeof vendorSchema>;
 
 export const getVendors = async () => {
-  return await prisma.vendor.findMany({
+  const vendors = await prisma.vendor.findMany({
     orderBy: { createdAt: "desc" },
+    include: {
+      invoices: {
+        where: { status: { in: ["unpaid", "partial"] } },
+        select: { totalAmount: true, paidAmount: true }
+      }
+    }
+  });
+
+  return vendors.map((v: any) => {
+    const outstandingBalance = v.invoices.reduce(
+      (sum: number, inv: any) => sum + (inv.totalAmount - inv.paidAmount), 0
+    );
+    const { invoices, ...vendor } = v;
+    return { ...vendor, outstandingBalance };
   });
 };
 

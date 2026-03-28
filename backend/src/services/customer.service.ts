@@ -11,8 +11,22 @@ export const customerSchema = z.object({
 export type CustomerInput = z.infer<typeof customerSchema>;
 
 export const getCustomers = async () => {
-  return await prisma.customer.findMany({
+  const customers = await prisma.customer.findMany({
     orderBy: { createdAt: "desc" },
+    include: {
+      invoices: {
+        where: { status: { in: ["unpaid", "partial"] } },
+        select: { totalAmount: true, receivedAmount: true }
+      }
+    }
+  });
+
+  return customers.map((c: any) => {
+    const outstandingBalance = c.invoices.reduce(
+      (sum: number, inv: any) => sum + (inv.totalAmount - inv.receivedAmount), 0
+    );
+    const { invoices, ...customer } = c;
+    return { ...customer, outstandingBalance };
   });
 };
 

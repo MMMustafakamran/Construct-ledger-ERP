@@ -1403,3 +1403,479 @@ textarea {
     padding: 14px 12px;
   }
 }
+
+/* ═══════════════════════════════════════════════════ */
+/* Collapsible Sidebar                                */
+/* ═══════════════════════════════════════════════════ */
+
+.sidebar {
+  transition: width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-collapsed {
+  width: 72px;
+  padding: 16px 8px 14px;
+}
+
+.sidebar-collapsed .sidebar-brand {
+  justify-content: center;
+  padding: 12px;
+}
+
+.sidebar-collapsed .sidebar-section {
+  align-items: center;
+}
+
+.sidebar-collapsed .sidebar-nav {
+  align-items: center;
+}
+
+.sidebar-collapsed .nav-link {
+  justify-content: center;
+  padding: 10px;
+  width: 48px;
+  height: 48px;
+}
+
+.nav-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.sidebar-toggle {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 15px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--text-muted);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+}
+
+.sidebar-toggle:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.app-shell-collapsed .layout-main {
+  transition: margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* Dashboard: 4-column metric grid                    */
+/* ═══════════════════════════════════════════════════ */
+
+.dashboard-metric-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.dashboard-metric-card-danger {
+  background: linear-gradient(180deg, rgba(176, 69, 53, 0.06), rgba(249, 227, 223, 0.4));
+  border-color: rgba(176, 69, 53, 0.18);
+}
+
+.dashboard-metric-card-danger .dashboard-metric-value {
+  color: var(--danger);
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* Cash Flow Bar Chart                                */
+/* ═══════════════════════════════════════════════════ */
+
+.cashflow-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 220px;
+  padding: 14px 0 0;
+}
+
+.cashflow-bar-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.cashflow-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  min-height: 180px;
+}
+
+.cashflow-bar {
+  width: 32px;
+  min-height: 4px;
+  border-radius: 6px 6px 2px 2px;
+  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  cursor: default;
+}
+
+.cashflow-bar.inflow {
+  background: linear-gradient(180deg, #2c8a5e, #1e6b47);
+}
+
+.cashflow-bar.outflow {
+  background: linear-gradient(180deg, #c45a4a, #a83c2e);
+}
+
+.bar-value {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cashflow-bar:hover .bar-value {
+  opacity: 1;
+}
+
+.cashflow-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.chart-legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 12px;
+}
+
+.legend-dot:first-child {
+  margin-left: 0;
+}
+
+.legend-inflow {
+  background: #2c8a5e;
+}
+
+.legend-outflow {
+  background: #c45a4a;
+}
+
+.legend-net {
+  background: var(--primary);
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* Aging Summary Cards                                */
+/* ═══════════════════════════════════════════════════ */
+
+.aging-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.aging-card {
+  padding: 20px;
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.aging-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.aging-label {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.aging-badge {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.aging-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.aging-count {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.aging-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(18, 63, 39, 0.08);
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.aging-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 2px;
+}
+
+.aging-fill-current {
+  background: var(--success);
+}
+
+.aging-fill-warning {
+  background: var(--warning);
+}
+
+.aging-fill-danger {
+  background: var(--danger);
+}
+
+.aging-current {
+  border-left: 4px solid var(--success);
+}
+
+.aging-warning {
+  border-left: 4px solid var(--warning);
+}
+
+.aging-danger {
+  border-left: 4px solid var(--danger);
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* Donut Chart                                        */
+/* ═══════════════════════════════════════════════════ */
+
+.donut-row {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.donut-container {
+  width: 180px;
+  height: 180px;
+  flex-shrink: 0;
+}
+
+.donut-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.donut-segment {
+  transition: stroke-dasharray 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.donut-center-label {
+  font-size: 10px;
+  fill: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.donut-center-value {
+  font-size: 11px;
+  fill: var(--ink);
+  font-weight: 700;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.donut-legend-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.donut-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.donut-legend-label {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.donut-legend-value {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  font-family: "IBM Plex Mono", monospace;
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* Overdue Invoices Grid                              */
+/* ═══════════════════════════════════════════════════ */
+
+.overdue-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* Bank Transaction History                           */
+/* ═══════════════════════════════════════════════════ */
+
+.transaction-history-panel {
+  animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.amount-inflow {
+  color: #1e6b47;
+  font-weight: 700;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.amount-outflow {
+  color: #a83c2e;
+  font-weight: 700;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* Accounts Page — Grouped by Category                */
+/* ═══════════════════════════════════════════════════ */
+
+.account-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.account-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 4px 6px;
+}
+
+.account-group-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.account-group-title h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+
+.account-group-icon {
+  font-size: 1.2rem;
+}
+
+.account-group-total {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.account-code {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: var(--surface-muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* Responsive Overrides                               */
+/* ═══════════════════════════════════════════════════ */
+
+@media (max-width: 1180px) {
+  .dashboard-metric-grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .aging-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .overdue-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar-collapsed {
+    width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .dashboard-metric-grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .cashflow-chart {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .donut-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
